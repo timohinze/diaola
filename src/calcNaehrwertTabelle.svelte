@@ -22,7 +22,7 @@ function bolusAusrechnen(){
 
 <p>Die Portion wiegt <input type=number class="portion-gewicht" bind:value={portionGewicht} on:input={bolusAusrechnen}> Gramm</p>
 
-<br><br><br>
+<br>
 <p> Bolus für <i>BolusExpert</i>: </p>
 
 <div class="result">

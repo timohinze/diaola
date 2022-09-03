@@ -60,7 +60,7 @@
   /> Gramm
 </p>
 
-<br /><br /><br />
+<br />
 <p>Bolus für <i>BolusExpert</i>:</p>
 
 <div class="result">

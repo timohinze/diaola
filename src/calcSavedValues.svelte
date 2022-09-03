@@ -57,7 +57,7 @@
   /> Gramm
 </p>
 
-<br><br><br>
+<br>
 
 {#if bolus != null && portionGewicht != null}
   <p>Bolus für <i>BolusExpert</i>:</p>
