@@ -45,7 +45,7 @@
     border: 1px solid lightgray;
     outline: 0;
     border-radius: 5px;
-    width: 30px;
+    width: 60px;
   }
   :global(input[type="number"]:focus) {
     border: 1px solid blue;
