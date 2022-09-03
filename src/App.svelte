@@ -12,6 +12,7 @@
 <svelte:head>
 	<title>DiaOla</title>
 	<meta name="robots" content="noindex nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<html lang="de" />
 </svelte:head>
 
@@ -40,7 +41,7 @@
   }
   :global(input[type="number"]) {
     padding: 10px;
-    font-size: 14px;
+    font-size: 16px;
     border: 1px solid lightgray;
     outline: 0;
     border-radius: 5px;
