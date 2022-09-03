@@ -70,7 +70,8 @@
 
 <style>
   .buch {
-    max-width: 300px;
+    width: 300px;
+    max-width: 100%;
     height: auto;
   }
 </style>
