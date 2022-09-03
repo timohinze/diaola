@@ -44,6 +44,7 @@
     border: 1px solid lightgray;
     outline: 0;
     border-radius: 5px;
+    width: 30px;
   }
   :global(input[type="number"]:focus) {
     border: 1px solid blue;
@@ -57,10 +58,10 @@
     border-top: 1px solid rgb(0, 0, 0);
     display: flex;
     justify-content: space-around;
+    width: 100%;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
-    text-shadow: 1px salmon;
   }
 
   :global(.result > span) {
