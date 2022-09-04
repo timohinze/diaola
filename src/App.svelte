@@ -7,6 +7,9 @@
   import CalcSavedValues from "./calcSavedValues.svelte";
 
   import CalcNaehrwertTabelle from "./calcNaehrwertTabelle.svelte";
+
+  import CalcMahlzeitenVarianten from "./calcMahlzeitenVarianten.svelte";
+
 </script>
 
 <svelte:head>
@@ -17,7 +20,7 @@
 </svelte:head>
 
 <main>
-  <h1>Diaola</h1>
+  <h1>DiaOla</h1>
 
   <div class="component-wrapper">
     <CalcNaehrwertTabelle />
@@ -30,6 +33,11 @@
   <div class="component-wrapper">
     <CalcBuch />
   </div>
+
+<div class="component-wrapper">
+  <CalcMahlzeitenVarianten></CalcMahlzeitenVarianten>
+</div>
+
 </main>
 
 
@@ -39,7 +47,8 @@
     margin-top: 2rem;
     margin-bottom: 8rem;
   }
-  :global(input[type="number"]) {
+  :global(input[type="number"]),
+  :global(input[type="text"]) {
     padding: 10px;
     font-size: 16px;
     border: 1px solid lightgray;
@@ -47,6 +56,10 @@
     border-radius: 5px;
     width: 60px;
   }
+  :global(input[type="text"]) {
+    width: auto;
+  }
+
   :global(input[type="number"]:focus) {
     border: 1px solid blue;
   }
