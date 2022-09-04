@@ -18,9 +18,9 @@ function bolusAusrechnen(){
 <h2> Bolus ausrechnen bei Angabe der Kohlenhydrate für 100g</h2>
 <p>Zum Beispiel in der Nährwerttabelle auf einer Verpackung</p>
 
-<p>Hundert Gramm des Lebensmittels haben <input type=number max="100" class="kohlenhydrate-auf100" bind:value={kohlenhydrateAuf100Gramm} on:input={bolusAusrechnen}  > Gramm Kohlenhydate</p>
+<p>Hundert Gramm des Lebensmittels haben <input type=number max="100" inputmode="numeric" pattern="[0-9]*" class="kohlenhydrate-auf100" bind:value={kohlenhydrateAuf100Gramm} on:input={bolusAusrechnen}  > Gramm Kohlenhydate</p>
 
-<p>Die Portion wiegt <input type=number class="portion-gewicht" bind:value={portionGewicht} on:input={bolusAusrechnen}> Gramm</p>
+<p>Die Portion wiegt <input type=number class="portion-gewicht" inputmode="numeric" pattern="[0-9]*" bind:value={portionGewicht} on:input={bolusAusrechnen}> Gramm</p>
 
 <br>
 <p> Bolus für <i>BolusExpert</i>: </p>

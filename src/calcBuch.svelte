@@ -38,6 +38,7 @@
   <input
     type="number"
     class="kohlenhydrate-buch"
+    inputmode="numeric" pattern="[0-9]*"
     bind:value={kohlenhydrateBuch}
     on:input={bolusBerechnenBasedOnBook}
   />
@@ -46,6 +47,7 @@
   <input
     type="number"
     class="portion-ke"
+    inputmode="numeric" pattern="[0-9]*"
     bind:value={summeKohlenhydratEinheitenBuch}
     on:input={bolusBerechnenBasedOnBook}
   /> KHE
@@ -55,6 +57,7 @@
   Die Mahlzeit beträgt <input
     type="number"
     class="portion-gegessen"
+    inputmode="numeric" pattern="[0-9]*"
     bind:value={portionGegessen}
     on:input={bolusBerechnenBasedOnBook}
   /> Gramm

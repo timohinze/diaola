@@ -54,6 +54,7 @@
   Die Portion wiegt <input
     type="number"
     class="portion-gewicht"
+    inputmode="numeric" pattern="[0-9]*"
     bind:value={portionGewicht}
     on:input={bolusBerechnenBasedOnSavedValues}
   /> Gramm
