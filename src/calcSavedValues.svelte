@@ -9,8 +9,6 @@
   // import data
   onMount(async () => {
     const { data, error } = await supabase.from("Kohlenhydrate").select().order('name', { ascending: true })
-
-;
     if (error) throw new Error(error.message);
     importedData = data;
   });

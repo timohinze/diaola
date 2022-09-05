@@ -1,4 +1,5 @@
 <script>
+  import { supabase } from "./supaBaseClient";
 
 let kohlenhydrateAuf100Gramm =0;
 
@@ -12,6 +13,33 @@ function bolusAusrechnen(){
   return bolus;
 }
 
+
+//save to db
+
+let  saveToDB = false;
+let nameLebensmittel;
+let saved = false;
+
+  const addToDatabse = async () => {
+    try{
+        const { data, error } = await supabase
+            .from('Kohlenhydrate')
+            .insert([{name: nameLebensmittel, kohlenhydrate: kohlenhydrateAuf100Gramm}])
+            if (error) throw new Error(error.message);
+    }
+            finally{
+              saved = true;
+            }
+    };
+
+
+
+
+
+
+
+
+
 </script>
 
 
@@ -22,9 +50,51 @@ function bolusAusrechnen(){
 
 <p>Die Portion wiegt <input type=number class="portion-gewicht" inputmode="numeric" pattern="[0-9]*" bind:value={portionGewicht} on:input={bolusAusrechnen}> Gramm</p>
 
+
+
+
 <br>
 <p> Bolus für <i>BolusExpert</i>: </p>
 
 <div class="result">
   <span> KH</span> <span><strong> {bolus} </strong><span class="be">BE</span> </span>
 </div>
+
+<br>
+<label>
+	<input type=checkbox bind:checked={saveToDB}>
+	In Datenbank speichern
+</label>
+
+{#if saveToDB }
+<div class="save-dialog">
+  <br>
+  <input class="name-lebensmittel"  type="text" placeholder="Name des Lebensmittels" bind:value={nameLebensmittel}  />
+  <br>
+  <button on:click|once={addToDatabse}>In Datenbank speichern</button>
+
+  {#if saved}
+  <p>Gespeichert!</p>
+  {/if}
+
+</div>
+{/if}
+
+
+
+<style>
+  .save-dialog{
+    background-color: rgba(255, 255, 107, 0.409);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    margin: 1rem;
+}
+  
+
+</style>
+
