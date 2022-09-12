@@ -10,6 +10,37 @@
 
   import CalcMahlzeitenVarianten from "./calcMahlzeitenVarianten.svelte";
 
+  //
+  import {MahlzeitenStore} from "./store.js"
+  $: MahlzeitenImport = MahlzeitenStore;
+  import Mahlzeit from "./Mahlzeit.svelte";
+
+  $: MahlzeitItems =  $MahlzeitenStore;
+
+
+  //
+  let newItem ={  }
+
+function addItemToMahlzeit(){
+MahlzeitenImport.update((currentData) => {
+
+  return [newItem, ...currentData];
+  }
+)
+};
+//
+
+let openMahlzeitModal = false;
+
+
+//
+function toggleMahlzeit(){
+  openMahlzeitModal =!openMahlzeitModal;
+}
+//
+
+
+
 </script>
 
 <svelte:head>
@@ -19,12 +50,25 @@
 	<html lang="de" />
 </svelte:head>
 
+
 <main>
   <h1>DiaOla</h1>
 
-  <div class="component-wrapper">
+  {#if MahlzeitItems.length >= 1}
+  <div class="btn-wrapper">
+  <button class="mahlzeit-zeigen-btn" on:click="{toggleMahlzeit}">Mahlzeit  {#if openMahlzeitModal == true} schließen {:else} zeigen {/if}({MahlzeitItems.length})</button>
+</div>
+{/if}
+
+  {#if openMahlzeitModal == true}
+<Mahlzeit></Mahlzeit>
+{/if}
+
+
+<div class="component-wrapper">
     <CalcNaehrwertTabelle />
   </div>
+
 
   <div class="component-wrapper">
     <CalcSavedValues />
@@ -84,5 +128,16 @@
   }
   :global(.be) {
     font-size: 0.7em;
+  }
+
+  .btn-wrapper{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: 11;
+    background: rgba(255, 255, 255, 0.846);
+    width: 100%;
+    border-top: 1px solid black;
+    backdrop-filter: blur(5px);
   }
 </style>

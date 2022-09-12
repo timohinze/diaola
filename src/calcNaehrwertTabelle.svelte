@@ -1,17 +1,67 @@
 <script>
   import { supabase } from "./supaBaseClient";
 
-let kohlenhydrateAuf100Gramm =0;
+  let kohlenhydrateAuf100Gramm =0;
 
 let portionGewicht =0;
 
 let bolus=0;
+
+  //
+  import {MahlzeitenStore} from "./store.js"
+
+  MahlzeitenStore.subscribe((data) => {
+  console.log(data) 
+    }
+  );
+  
+
+  let MahlzeitUpdated =false;
+
+
+function addItemToMahlzeit(){
+  let newItem ={
+    id: 1,
+    name: nameLebensmittel,
+    gramm: portionGewicht,
+    kohlenhydrate: bolusAusrechnen()
+  }
+
+
+
+  MahlzeitenStore.update((currentData) => {
+
+    MahlzeitUpdated = true;
+  return [newItem, ...currentData];
+
+
+
+  }
+)
+};
+//
+
+console.log(MahlzeitenStore)
+
+
+
+
+
+
+
+
+
+
+
 
 function bolusAusrechnen(){
   bolus = kohlenhydrateAuf100Gramm/100*portionGewicht/10;
   bolus = parseFloat(bolus.toFixed(1));
   return bolus;
 }
+
+
+
 
 
 //save to db
@@ -60,7 +110,21 @@ let saved = false;
   <span> KH</span> <span><strong> {bolus} </strong><span class="be">BE</span> </span>
 </div>
 
+<!-- save to Mahlzeit -->
 <br>
+<input class="name-lebensmittel"  type="text" placeholder="Name des Lebensmittels" bind:value={nameLebensmittel}  />
+
+<button on:click="{addItemToMahlzeit}">In Mahlzeit speichern</button>
+
+{#if MahlzeitUpdated}
+  <p>√</p>
+{/if}
+
+
+
+
+<!-- save to db -->
+<br><br>
 <label>
 	<input type=checkbox bind:checked={saveToDB}>
 	In Datenbank speichern
@@ -79,6 +143,8 @@ let saved = false;
 
 </div>
 {/if}
+
+<br><br>
 
 
 
