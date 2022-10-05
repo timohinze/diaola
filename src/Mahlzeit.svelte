@@ -1,7 +1,10 @@
 <script>
 //
-import {MahlzeitenStore, totalBolus} from "./store.js"
+//import {MahlzeitenStore, totalBolus} from "./store.js"
+
+import {MahlzeitenStore} from "./store.js"
 import calcNaehrwertTabelle from "./calcNaehrwertTabelle.svelte"
+import { onMount } from "svelte";
 let MahlzeitenData;
 
 MahlzeitenStore.subscribe((data) => {
@@ -9,6 +12,45 @@ MahlzeitenStore.subscribe((data) => {
 
   }
 );
+///
+
+//
+
+let deleteFromMahlzeit = id => {
+  console.log(id);
+  MahlzeitenData = MahlzeitenData.filter(MahlzeitenData => MahlzeitenData.id !== id);
+ 
+  caclculateTotalBolus();
+
+};
+
+let totalBolus = 0
+$: totalBolus = totalBolus;
+
+
+
+// let caclculateTotalBolus = totalBolus => {
+// 		let kohlenhydrate = 0
+// 		MahlzeitenData.forEach(e => kohlenhydrate = kohlenhydrate+e.kohlenhydrate)
+//     console.log(kohlenhydrate);
+//     totalBolus = kohlenhydrate;
+// 	};
+
+function caclculateTotalBolus(){
+		let kohlenhydrate = 0
+		MahlzeitenData.forEach(e => kohlenhydrate = kohlenhydrate+e.kohlenhydrate)
+    console.log(kohlenhydrate);
+    totalBolus = kohlenhydrate;
+	};
+
+
+
+  onMount(() => {
+    caclculateTotalBolus();
+    console.log("mount");
+  });
+
+
 
 </script>
 
@@ -19,7 +61,7 @@ MahlzeitenStore.subscribe((data) => {
 
 
 {#each MahlzeitenData as Mahlzeit}
- <li>{Mahlzeit.gramm}g {Mahlzeit.name} = {Mahlzeit.kohlenhydrate} KHE</li>
+ <li>{Mahlzeit.gramm}g {Mahlzeit.name} = {Mahlzeit.kohlenhydrate} KHE <button on:click={() => deleteFromMahlzeit(Mahlzeit.id)}>löschen</button></li>
 {/each}
 </ul>
 
@@ -29,7 +71,7 @@ MahlzeitenStore.subscribe((data) => {
 <p> Bolus für <i>BolusExpert</i>: </p>
 
 <div class="result">
-  <span> KH</span> <span><strong> {$totalBolus.toFixed(2)} </strong><span class="be">BE</span> </span>
+  <span> KH</span> <span><strong> {totalBolus} </strong><span class="be">BE</span> </span>
 </div>
 {/if}
 

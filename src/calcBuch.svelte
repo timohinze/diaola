@@ -23,6 +23,47 @@
 
     return bolus;
   }
+
+
+
+    // save in Mahlzeit
+    import {MahlzeitenStore} from "./store.js"
+
+MahlzeitenStore.subscribe((data) => {
+console.log(data) 
+  }
+);
+
+
+let MahlzeitUpdated =false;
+let nameLebensmittel;
+
+  $: MahlzeitItems =  $MahlzeitenStore;
+
+
+function addItemToMahlzeit(){
+let newItem ={
+  id: MahlzeitItems.length+1,
+  name: nameLebensmittel,
+  gramm: portionGegessen,
+  kohlenhydrate: bolusBerechnenBasedOnBook()
+}
+
+
+
+MahlzeitenStore.update((currentData) => {
+
+  MahlzeitUpdated = true;
+return [newItem, ...currentData];
+
+
+
+}
+)
+};
+// save in Mahlzeit
+
+
 </script>
 
 <h2>Bolus ausrechnen nach Buch</h2>
@@ -38,16 +79,17 @@
   <input
     type="number"
     class="kohlenhydrate-buch"
-    inputmode="numeric" pattern="[0-9]*"
+    inputmode="decimal" pattern="[0-9]*"
     bind:value={kohlenhydrateBuch}
     on:input={bolusBerechnenBasedOnBook}
   />
   Gramm des Lebensmittels haben
 
+
   <input
     type="number"
     class="portion-ke"
-    inputmode="numeric" pattern="[0-9]*"
+    inputmode="decimal" pattern="[0-9]*"
     bind:value={summeKohlenhydratEinheitenBuch}
     on:input={bolusBerechnenBasedOnBook}
   /> KHE
@@ -57,7 +99,7 @@
   Die Mahlzeit beträgt <input
     type="number"
     class="portion-gegessen"
-    inputmode="numeric" pattern="[0-9]*"
+    inputmode="decimal" pattern="[0-9]*"
     bind:value={portionGegessen}
     on:input={bolusBerechnenBasedOnBook}
   /> Gramm
@@ -70,6 +112,17 @@
   <span> KH</span>
   <span><strong> {bolus} </strong><span class="be">BE</span> </span>
 </div>
+
+
+<!-- save to Mahlzeit -->
+<br>
+<input class="name-lebensmittel"  type="text" placeholder="Name des Lebensmittels" bind:value={nameLebensmittel}  />
+
+<button on:click="{addItemToMahlzeit}">In Mahlzeit speichern</button>
+
+{#if MahlzeitUpdated}
+  <p>√</p>
+{/if}
 
 <style>
   .buch {

@@ -1,4 +1,5 @@
 <script>
+
   import Select from "svelte-select";
 
   import { supabase } from "./supaBaseClient";
@@ -6,6 +7,51 @@
   import { onMount } from "svelte";
   let importedData;
 
+
+
+  // save in Mahlzeit
+  import {MahlzeitenStore} from "./store.js"
+  $: MahlzeitItems =  $MahlzeitenStore;
+
+  MahlzeitenStore.subscribe((data) => {
+  console.log(data) 
+    }
+  );
+  
+
+  let MahlzeitUpdated =false;
+
+
+function addItemToMahlzeit(){
+  let newItem ={
+    id: MahlzeitItems.length+1,
+    name: selectedItemName,
+    gramm: portionGewicht,
+    kohlenhydrate: bolusBerechnenBasedOnSavedValues()
+  }
+
+
+
+  MahlzeitenStore.update((currentData) => {
+
+    MahlzeitUpdated = true;
+  return [newItem, ...currentData];
+
+
+
+  }
+)
+};
+// save in Mahlzeit
+
+
+
+
+
+
+
+
+  
   // import data
   onMount(async () => {
     const { data, error } = await supabase.from("Kohlenhydrate").select().order('name', { ascending: true })
@@ -67,4 +113,14 @@
     <span> KH</span>
     <span><strong> {bolus} </strong><span class="be">BE</span> </span>
   </div>
+{/if}
+
+
+<!-- save to Mahlzeit -->
+<br>
+
+<button on:click="{addItemToMahlzeit}">In Mahlzeit speichern</button>
+
+{#if MahlzeitUpdated}
+  <p>√</p>
 {/if}

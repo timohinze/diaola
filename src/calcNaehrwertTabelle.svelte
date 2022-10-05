@@ -10,6 +10,9 @@ let bolus=0;
   //
   import {MahlzeitenStore} from "./store.js"
 
+  $: MahlzeitItems =  $MahlzeitenStore;
+
+
   MahlzeitenStore.subscribe((data) => {
   console.log(data) 
     }
@@ -21,7 +24,7 @@ let bolus=0;
 
 function addItemToMahlzeit(){
   let newItem ={
-    id: 1,
+    id: MahlzeitItems.length+1,
     name: nameLebensmittel,
     gramm: portionGewicht,
     kohlenhydrate: bolusAusrechnen()
